@@ -7,8 +7,8 @@ Based on [sanjay3290/ai-skills/imagen](https://github.com/sanjay3290/ai-skills).
 ## Features
 
 - Zero dependencies (Python standard library only)
-- Forces `.jpg` output (Gemini API always returns JPEG)
-- Auto-converts any extension to `.jpg`
+- Detects actual image format via magic bytes
+- Auto-corrects file extension to match real format
 
 ## Usage
 

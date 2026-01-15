@@ -13,7 +13,7 @@ description: |
 
 This skill generates images using Google Gemini's image generation model (`gemini-3-pro-image-preview`). It enables seamless image creation during any Claude Code session.
 
-**Output Format**: Always JPEG (Gemini API limitation). Any extension is auto-converted to `.jpg`.
+**Output Format**: Detects actual format via magic bytes and auto-corrects file extension.
 
 ## When to Use This Skill
 
@@ -30,7 +30,7 @@ Automatically activate this skill when:
 # Basic usage
 python3 scripts/generate_image.py "A futuristic city skyline at sunset"
 
-# With custom output path (always use .jpg)
+# With custom output path
 python3 scripts/generate_image.py "A minimalist app icon" "./assets/icons/music-icon.jpg"
 
 # With custom size (512, 1K, 2K)
@@ -44,8 +44,9 @@ python3 scripts/generate_image.py --size 2K "High resolution landscape" "./wallp
 
 ## Output
 
-Generated images are saved as JPEG files. The script:
-- Auto-converts any extension to `.jpg`
+The script:
+- Detects actual image format from magic bytes
+- Auto-corrects file extension to match real format
 - Returns the actual output path on success
 - Shows error message with details on failure
 

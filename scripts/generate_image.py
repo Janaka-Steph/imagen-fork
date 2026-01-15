@@ -199,7 +199,7 @@ def get_file_size(path: Path) -> str:
 
 def main():
     parser = argparse.ArgumentParser(
-        description="Generate images using Google Gemini AI (JPEG output)",
+        description="Generate images using Google Gemini AI",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Examples:
@@ -207,8 +207,7 @@ Examples:
   python generate_image.py "An app icon" ./icons/app.jpg
   python generate_image.py --size 2K "High-res landscape" ./wallpaper.jpg
 
-Note: Output is always JPEG format (Gemini API limitation).
-      Any extension will be converted to .jpg automatically.
+Note: Detects actual image format via magic bytes and auto-corrects extension.
 
 Environment Variables:
   GEMINI_API_KEY    Your Google Gemini API key (required)
