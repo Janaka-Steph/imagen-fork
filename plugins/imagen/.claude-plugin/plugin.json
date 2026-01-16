@@ -1,5 +1,12 @@
 {
   "name": "imagen",
   "version": "1.1.0",
-  "description": "Generate images using Google Gemini's AI image generation model. Create UI mockups, icons, illustrations, diagrams, and more."
+  "description": "Generate images using Google Gemini's AI image generation model. Create UI mockups, icons, illustrations, diagrams, and more.",
+  "entry": {
+    "skills": [
+      {
+        "path": "${CLAUDE_PLUGIN_ROOT}/skills/imagen/SKILL.md"
+      }
+    ]
+  }
 }
