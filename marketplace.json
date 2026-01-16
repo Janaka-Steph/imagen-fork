@@ -1,0 +1,26 @@
+{
+  "name": "gemini-imagen",
+  "version": "1.0.0",
+  "description": "Generate images using Google Gemini's image generation capabilities",
+  "author": "Janaka-Steph",
+  "license": "Apache-2.0",
+  "repository": "https://github.com/Janaka-Steph/gemini-imagen",
+  "skills": [
+    {
+      "name": "imagen",
+      "description": "Generate images using Google Gemini API. Use for UI mockups, icons, illustrations, diagrams, concept art, or any visual content.",
+      "file": "SKILL.md"
+    }
+  ],
+  "requirements": {
+    "env": ["GEMINI_API_KEY"],
+    "python": ">=3.6"
+  },
+  "keywords": [
+    "image-generation",
+    "gemini",
+    "ai",
+    "mockups",
+    "illustrations"
+  ]
+}
