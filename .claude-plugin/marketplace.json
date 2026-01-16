@@ -1,10 +1,10 @@
 {
-  "name": "gemini-imagen",
+  "name": "janaka-claude-plugins",
   "owner": {
     "name": "Janaka-Steph"
   },
   "metadata": {
-    "description": "Generate images using Google Gemini API",
+    "description": "Collection of Claude Code plugins by Janaka-Steph",
     "version": "1.0.0"
   },
   "plugins": [
@@ -16,8 +16,8 @@
       "author": {
         "name": "Janaka-Steph"
       },
-      "homepage": "https://github.com/Janaka-Steph/gemini-imagen",
-      "repository": "https://github.com/Janaka-Steph/gemini-imagen",
+      "homepage": "https://github.com/Janaka-Steph/janaka-claude-plugins",
+      "repository": "https://github.com/Janaka-Steph/janaka-claude-plugins",
       "license": "Apache-2.0",
       "keywords": ["image", "gemini", "ai", "generation", "mockup"],
       "category": "media",
