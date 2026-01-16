@@ -1,0 +1,30 @@
+Mobile app UI screen generation - Clean screenshots filling the entire image.
+
+CRITICAL OUTPUT REQUIREMENTS:
+- The screen content MUST fill the ENTIRE image from edge to edge
+- NO background around the screen
+- NO phone frame or device border
+- NO margins or padding outside the UI
+- The image IS the screen, nothing else
+
+Perspective:
+- Front view ONLY - straight-on, no angles
+- No 3D perspective, no tilted views, no isometric
+
+Dimensions:
+- Smartphone screen proportions (approximately 9:19.5 ratio)
+- Full screen visible, not cropped
+- Screen edges = image edges
+
+Content:
+- Realistic UI elements (buttons, text, icons, images)
+- Appropriate content density for mobile
+- Touch-friendly sizing for interactive elements
+- Clear visual hierarchy
+
+Quality:
+- Crisp, sharp rendering
+- Consistent styling throughout
+- Professional, production-ready appearance
+
+The output should look like a screenshot taken directly from a phone - just the UI, nothing else.

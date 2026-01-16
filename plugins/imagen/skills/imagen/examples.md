@@ -199,12 +199,12 @@ Claude will:
 
 ### Extract Logo and Convert to Clean SVG (One Step - Recommended)
 ```
-User: "Extract the logo from this mockup and make it an SVG"
+User: "Extract the logo from this screen and make it an SVG"
 
 Claude will run:
 python3 $SKILL_DIR/scripts/generate_with_preset.py \
   --preset damemano \
-  --input mockup.jpg \
+  --input screen.jpg \
   --remove-bg \
   --output-svg \
   "Extract the logo on transparent background" \
@@ -253,11 +253,11 @@ python3 $SKILL_DIR/scripts/convert_to_svg.py --svg-mode binary ./icon.png ./icon
 
 ### Override Palette (when --preset differs from desired SVG colors)
 ```
-User: "Generate a mockup-style logo but use the damemano colors for SVG"
+User: "Generate a mobile-ui-style logo but use the damemano colors for SVG"
 
 Claude will run:
 python3 $SKILL_DIR/scripts/generate_with_preset.py \
-  --preset mockup \
+  --preset mobile-ui \
   --svg-palette damemano \
   --remove-bg \
   --output-svg \

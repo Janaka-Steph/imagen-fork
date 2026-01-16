@@ -14,11 +14,11 @@ The tool searches for presets in this order:
 Usage:
     # Text-to-image
     python generate_with_preset.py --preset creative "your prompt" output.jpg
-    python generate_with_preset.py --preset mockup,damemano "login screen" output.jpg
+    python generate_with_preset.py --preset mobile-ui,damemano "login screen" output.jpg
 
     # Image-to-image (edit/transform existing image)
     python generate_with_preset.py --input photo.jpg "extract the logo" logo.png
-    python generate_with_preset.py --input mockup.jpg --preset damemano "refine colors" output.jpg
+    python generate_with_preset.py --input screen.jpg --preset damemano "refine colors" output.jpg
 
     # Multiple reference images
     python generate_with_preset.py -i navbar.png -i menu.png "combine these designs" output.jpg
@@ -202,11 +202,11 @@ Examples:
   # Text-to-image with creative mode
   python generate_with_preset.py --preset creative "landing page concepts" output.jpg
 
-  # Combine presets (mockup rules + project style)
-  python generate_with_preset.py --preset mockup,damemano "search screen" output.jpg
+  # Combine presets (mobile-ui rules + project style)
+  python generate_with_preset.py --preset mobile-ui,damemano "search screen" output.jpg
 
   # Image-to-image: extract or transform
-  python generate_with_preset.py --input mockup.jpg "extract the logo on transparent background" logo.png
+  python generate_with_preset.py --input screen.jpg "extract the logo on transparent background" logo.png
   python generate_with_preset.py --input photo.jpg --preset damemano "apply brand colors" output.jpg
 
   # Multiple reference images (use -i multiple times)
@@ -235,7 +235,7 @@ Preset search order:
     parser.add_argument("--input", "-i", metavar="IMAGE", action="append", dest="inputs",
                         help="Input image(s) for reference (can be used multiple times)")
     parser.add_argument("--preset", "-p",
-                        help="Preset name(s) to use, comma-separated (e.g., 'creative' or 'mockup,damemano')")
+                        help="Preset name(s) to use, comma-separated (e.g., 'creative' or 'mobile-ui,damemano')")
     parser.add_argument("--remove-bg", "-r", action="store_true",
                         help="Remove background after generation (requires: pip install rembg)")
     parser.add_argument("--output-svg", "-s", action="store_true",
@@ -335,8 +335,8 @@ Preset search order:
         # Determine SVG palette: explicit --svg-palette, or first project preset from --preset
         svg_palette = args.svg_palette
         if not svg_palette and args.preset:
-            # Extract first preset that's not a built-in (creative, mockup)
-            builtin_presets = {"creative", "mockup"}
+            # Extract first preset that's not a built-in (creative, mobile-ui)
+            builtin_presets = {"creative", "mobile-ui"}
             for preset_name in args.preset.split(","):
                 preset_name = preset_name.strip()
                 if preset_name and preset_name not in builtin_presets:

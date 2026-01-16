@@ -53,7 +53,7 @@ python3 $SKILL_DIR/scripts/generate_with_preset.py \
 
 | Option | Description |
 |--------|-------------|
-| `--preset, -p` | Preset name(s), comma-separated (e.g., `mockup,damemano`) |
+| `--preset, -p` | Preset name(s), comma-separated (e.g., `mobile-ui,damemano`) |
 | `--input, -i` | Input image(s) for image-to-image (can use multiple times) |
 | `--size` | Output size: `512`, `1K` (default), or `2K` |
 | `--remove-bg, -r` | Remove background (requires: `pip install rembg`) |
@@ -82,24 +82,36 @@ Presets are searched in order:
 | Preset | Purpose |
 |--------|---------|
 | `creative` | Brainstorming mode - bold, distinctive, non-generic designs |
-| `mockup` | Mobile UI mockups - front view, no embellishments, 9:19.5 ratio |
+| `mobile-ui` | Mobile UI screens - full-bleed, no device frame, 9:19.5 ratio |
+
+## Combining Presets
+
+Multiple presets can be combined with commas: `--preset mobile-ui,damemano`
+
+**How it works:** Presets are concatenated in order into the final prompt. The model receives all instructions together.
+
+**Best practice:** Combine presets that address different aspects:
+- `mobile-ui` = format/framing rules (screen ratio, no device frame)
+- `damemano` = style rules (colors, typography, brand feel)
+
+**Conflicts:** If presets contradict each other, the model's behavior is unpredictable - it may follow the last instruction, make a compromise, or ignore some rules. Avoid combining presets with conflicting instructions.
 
 ## Common Tasks
 
-### Generate UI mockup
+### Generate mobile UI screen
 
 ```bash
 python3 $SKILL_DIR/scripts/generate_with_preset.py \
-  --preset mockup \
+  --preset mobile-ui \
   "Login screen with email input, password field, and submit button" \
   login.jpg
 ```
 
-### Apply project style to mockup
+### Apply project style to mobile screen
 
 ```bash
 python3 $SKILL_DIR/scripts/generate_with_preset.py \
-  --preset mockup,<project_preset> \
+  --preset mobile-ui,<project_preset> \
   "Search results page" \
   search.jpg
 ```
@@ -108,7 +120,7 @@ python3 $SKILL_DIR/scripts/generate_with_preset.py \
 
 ```bash
 python3 $SKILL_DIR/scripts/generate_with_preset.py \
-  --input mockup.jpg \
+  --input screen.jpg \
   "Extract the logo on transparent background" \
   logo.png
 ```
@@ -152,7 +164,7 @@ python3 $SKILL_DIR/scripts/generate_with_preset.py \
 
 # Explicit palette override (if different from --preset)
 python3 $SKILL_DIR/scripts/generate_with_preset.py \
-  --preset mockup \
+  --preset mobile-ui \
   --svg-palette damemano \
   --remove-bg --output-svg \
   "logo on transparent background" \
@@ -180,13 +192,13 @@ python3 $SKILL_DIR/scripts/convert_to_svg.py --svg-palette damemano logo.png log
 
 When using `--output-svg`, the tool automatically:
 1. Applies the `logo` preset for color quantization
-2. Uses the project palette from `--preset` (if not a built-in like `creative` or `mockup`)
+2. Uses the project palette from `--preset` (if not a built-in like `creative` or `mobile-ui`)
 
 This ensures clean, optimized SVGs on the first generation. Override with `--svg-palette` if needed.
 
-## Correcting/Fixing Mockups
+## Correcting/Fixing UI Screens
 
-When asked to "correct" or "fix" an existing mockup:
+When asked to "correct" or "fix" an existing UI screen:
 - **Use `--input`** to pass the original image
 - **Keep everything else intact** — Only change the specific elements mentioned in the prompt
 - The goal is to fix identified issues while preserving the overall design, layout, and style
@@ -194,10 +206,10 @@ When asked to "correct" or "fix" an existing mockup:
 
 ```bash
 python3 $SKILL_DIR/scripts/generate_with_preset.py \
-  --input original-mockup.jpg \
-  --preset mockup \
+  --input original-screen.jpg \
+  --preset mobile-ui \
   "Fix the navbar: change from 4 items to 3 items (Buscar, +, Yo)" \
-  original-mockup-fixed.jpg
+  original-screen-fixed.jpg
 ```
 
 ## Parallel Generation
@@ -206,9 +218,9 @@ When generating multiple images, run commands in parallel for efficiency:
 
 ```bash
 # Run these in parallel (multiple Bash calls in same response)
-python3 $SKILL_DIR/scripts/generate_with_preset.py --preset mockup "home screen" home.jpg
-python3 $SKILL_DIR/scripts/generate_with_preset.py --preset mockup "profile screen" profile.jpg
-python3 $SKILL_DIR/scripts/generate_with_preset.py --preset mockup "settings screen" settings.jpg
+python3 $SKILL_DIR/scripts/generate_with_preset.py --preset mobile-ui "home screen" home.jpg
+python3 $SKILL_DIR/scripts/generate_with_preset.py --preset mobile-ui "profile screen" profile.jpg
+python3 $SKILL_DIR/scripts/generate_with_preset.py --preset mobile-ui "settings screen" settings.jpg
 ```
 
 ## Environment

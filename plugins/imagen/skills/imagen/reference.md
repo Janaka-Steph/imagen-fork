@@ -88,7 +88,7 @@ python3 $SKILL_DIR/scripts/convert_to_svg.py [options] <input> <output>
 
 When using `--output-svg` in `generate_with_preset.py`, the tool automatically:
 - Applies the `logo` preset to quantize colors
-- Detects the project palette from `--preset` (ignores built-ins like `creative`, `mockup`)
+- Detects the project palette from `--preset` (ignores built-ins like `creative`, `mobile-ui`)
 - Produces clean, optimized SVGs (~25KB instead of ~400KB)
 
 Override with explicit `--svg-palette` if needed.
@@ -111,7 +111,7 @@ python3 $SKILL_DIR/scripts/generate_with_preset.py "A serene mountain landscape 
 ### With Preset
 
 ```bash
-python3 $SKILL_DIR/scripts/generate_with_preset.py --preset mockup "Login screen" "./login.jpg"
+python3 $SKILL_DIR/scripts/generate_with_preset.py --preset mobile-ui "Login screen" "./login.jpg"
 ```
 
 ### Custom Output Path
