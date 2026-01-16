@@ -10,10 +10,13 @@ Usage:
     python convert_to_svg.py input.png output.svg
 
     # Binary mode for line art (faster)
-    python convert_to_svg.py --mode binary input.png output.svg
+    python convert_to_svg.py --svg-mode binary input.png output.svg
 
     # Logo preset (quantizes colors first for cleaner output)
-    python convert_to_svg.py --preset logo input.png output.svg
+    python convert_to_svg.py --svg-preset logo input.png output.svg
+
+    # Project palette for cleaner output
+    python convert_to_svg.py --svg-palette damemano input.png output.svg
 
     # Custom settings for cleaner output
     python convert_to_svg.py --filter-speckle 8 --color-precision 4 input.png output.svg
@@ -225,7 +228,10 @@ Examples:
   python convert_to_svg.py logo.png logo.svg
 
   # Binary mode for line art (much faster)
-  python convert_to_svg.py --mode binary icon.png icon.svg
+  python convert_to_svg.py --svg-mode binary icon.png icon.svg
+
+  # Logo preset with project palette (recommended)
+  python convert_to_svg.py --svg-preset logo --svg-palette damemano logo.png logo.svg
 
   # Cleaner output with fewer colors
   python convert_to_svg.py --color-precision 4 --filter-speckle 8 logo.png logo.svg
@@ -234,26 +240,27 @@ Examples:
   python convert_to_svg.py --path-mode polygon graphic.png graphic.svg
 
 Tips:
-  - Use "binary" mode for line art, logos with solid colors
+  - Use --svg-preset logo for cleaner output (~25KB vs ~400KB)
+  - Use --svg-palette to match your project colors
+  - Use --svg-mode binary for line art, logos with solid colors
   - Lower color-precision = fewer colors, simpler SVG
   - Higher filter-speckle = removes more small artifacts
-  - "stacked" hierarchical is usually better for graphics
         """
     )
 
     parser.add_argument("input", help="Input image file (PNG, JPG, etc.)")
     parser.add_argument("output", help="Output SVG file path")
 
-    parser.add_argument("--mode", "-m", choices=["color", "binary"], default="color",
+    parser.add_argument("--svg-mode", "-m", choices=["color", "binary"], default="color",
                         help="Color mode: 'color' (default) or 'binary' for B/W")
     parser.add_argument("--hierarchical", choices=["stacked", "cutout"], default="stacked",
                         help="Shape hierarchy: 'stacked' (default) or 'cutout'")
     parser.add_argument("--path-mode", choices=["spline", "polygon", "none"], default="spline",
                         help="Path type: 'spline' (curves), 'polygon' (lines), 'none'")
 
-    parser.add_argument("--preset", choices=["logo"], default=None,
-                        help="Preset: 'logo' (quantizes colors for cleaner output)")
-    parser.add_argument("--palette", choices=list(PALETTES.keys()), default=None,
+    parser.add_argument("--svg-preset", choices=["logo"], default=None,
+                        help="SVG preset: 'logo' (quantizes colors for cleaner output)")
+    parser.add_argument("--svg-palette", choices=list(PALETTES.keys()), default=None,
                         help=f"Color palette for quantization: {', '.join(PALETTES.keys())}")
 
     parser.add_argument("--filter-speckle", type=int, default=4,
@@ -281,7 +288,7 @@ Tips:
     convert_to_svg(
         input_path=input_path,
         output_path=output_path,
-        colormode=args.mode,
+        colormode=args.svg_mode,
         hierarchical=args.hierarchical,
         mode=args.path_mode,
         filter_speckle=args.filter_speckle,
@@ -292,8 +299,8 @@ Tips:
         max_iterations=args.max_iterations,
         splice_threshold=args.splice_threshold,
         path_precision=args.path_precision,
-        preset=args.preset,
-        palette=args.palette,
+        preset=args.svg_preset,
+        palette=args.svg_palette,
     )
 
     print("Done!")

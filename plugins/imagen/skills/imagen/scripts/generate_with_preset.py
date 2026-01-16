@@ -242,6 +242,8 @@ Preset search order:
                         help="Convert output to SVG (requires: pip install vtracer)")
     parser.add_argument("--svg-mode", choices=["color", "binary"], default="color",
                         help="SVG color mode: 'color' (default) or 'binary' for B/W line art")
+    parser.add_argument("--svg-palette",
+                        help="SVG color palette for quantization (e.g., 'damemano'). Auto-detected from --preset if not specified.")
     parser.add_argument("--show-prompt", action="store_true",
                         help="Show the full prompt (preset + user) and exit without generating")
     parser.add_argument("--size", choices=["512", "1K", "2K"],
@@ -330,10 +332,23 @@ Preset search order:
 
     # Convert to SVG if requested
     if args.output_svg:
+        # Determine SVG palette: explicit --svg-palette, or first project preset from --preset
+        svg_palette = args.svg_palette
+        if not svg_palette and args.preset:
+            # Extract first preset that's not a built-in (creative, mockup)
+            builtin_presets = {"creative", "mockup"}
+            for preset_name in args.preset.split(","):
+                preset_name = preset_name.strip()
+                if preset_name and preset_name not in builtin_presets:
+                    svg_palette = preset_name
+                    break
+
         svg_path = convert_to_svg(
             input_path=final_path,
             output_path=output_path.with_suffix(".svg"),
             colormode=args.svg_mode,
+            preset="logo",  # Always use logo preset for cleaner SVG
+            palette=svg_palette,
         )
         # Keep the raster as intermediate, report SVG as main output
         final_path = svg_path

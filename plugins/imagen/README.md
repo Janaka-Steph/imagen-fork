@@ -11,6 +11,7 @@ Based on [sanjay3290/ai-skills/imagen](https://github.com/sanjay3290/ai-skills).
 - Auto-corrects file extension to match real format
 - SVG conversion with vtracer (optional: `pip install vtracer pillow`)
 - Background removal with rembg (optional: `pip install rembg`)
+- **Smart SVG optimization**: Auto-detects project palette from `--preset` for clean SVGs (~25KB vs ~400KB)
 
 ## Usage
 
@@ -37,6 +38,21 @@ Get a free key: https://aistudio.google.com/
 ```bash
 python3 $SKILL_DIR/scripts/generate_with_preset.py --size 2K "prompt" "output.jpg"
 ```
+
+## SVG Generation
+
+Generate clean, optimized SVGs in one step:
+
+```bash
+python3 $SKILL_DIR/scripts/generate_with_preset.py \
+  --preset damemano \
+  --remove-bg \
+  --output-svg \
+  "logo icon" \
+  logo.svg
+```
+
+The `--preset` automatically sets `--svg-palette` for color quantization, producing much smaller and cleaner SVGs.
 
 ## License
 

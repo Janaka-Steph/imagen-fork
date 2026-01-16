@@ -197,37 +197,21 @@ Claude will:
 
 ## SVG Conversion
 
-### Logo to SVG (Clean Output)
-```
-User: "Convert my logo to SVG for scalability"
-
-Claude will run:
-python3 $SKILL_DIR/scripts/convert_to_svg.py --preset logo ./logo.png ./logo.svg
-```
-
-### Logo with Project Palette
-```
-User: "Convert the DameMano logo to a clean SVG"
-
-Claude will run:
-python3 $SKILL_DIR/scripts/convert_to_svg.py --palette damemano ./logo.png ./logo.svg
-```
-
-### Extract Logo and Convert to SVG
+### Extract Logo and Convert to Clean SVG (One Step - Recommended)
 ```
 User: "Extract the logo from this mockup and make it an SVG"
 
 Claude will run:
-1. python3 $SKILL_DIR/scripts/generate_with_preset.py --input mockup.jpg --remove-bg "Extract the logo on transparent background" logo.png
-2. python3 $SKILL_DIR/scripts/convert_to_svg.py --preset logo logo.png logo.svg
-```
+python3 $SKILL_DIR/scripts/generate_with_preset.py \
+  --preset damemano \
+  --input mockup.jpg \
+  --remove-bg \
+  --output-svg \
+  "Extract the logo on transparent background" \
+  logo.svg
 
-### Line Art to Binary SVG
-```
-User: "Convert this icon to a black and white SVG"
-
-Claude will run:
-python3 $SKILL_DIR/scripts/convert_to_svg.py --mode binary ./icon.png ./icon.svg
+# The --preset damemano automatically sets --svg-palette damemano
+# This produces a clean ~25KB SVG instead of ~400KB
 ```
 
 ### Generate and Convert in One Step
@@ -235,7 +219,50 @@ python3 $SKILL_DIR/scripts/convert_to_svg.py --mode binary ./icon.png ./icon.svg
 User: "Generate a simple logo and make it an SVG"
 
 Claude will run:
-python3 $SKILL_DIR/scripts/generate_with_preset.py --remove-bg --output-svg "minimalist app logo, flat design, two colors" ./logo.svg
+python3 $SKILL_DIR/scripts/generate_with_preset.py \
+  --preset damemano \
+  --remove-bg \
+  --output-svg \
+  "minimalist app logo, flat design, two colors" \
+  ./logo.svg
+```
+
+### Logo to SVG (Standalone Conversion)
+```
+User: "Convert my logo to SVG for scalability"
+
+Claude will run:
+python3 $SKILL_DIR/scripts/convert_to_svg.py --svg-preset logo ./logo.png ./logo.svg
+```
+
+### Logo with Project Palette (Standalone)
+```
+User: "Convert the DameMano logo to a clean SVG"
+
+Claude will run:
+python3 $SKILL_DIR/scripts/convert_to_svg.py --svg-palette damemano ./logo.png ./logo.svg
+```
+
+### Line Art to Binary SVG
+```
+User: "Convert this icon to a black and white SVG"
+
+Claude will run:
+python3 $SKILL_DIR/scripts/convert_to_svg.py --svg-mode binary ./icon.png ./icon.svg
+```
+
+### Override Palette (when --preset differs from desired SVG colors)
+```
+User: "Generate a mockup-style logo but use the damemano colors for SVG"
+
+Claude will run:
+python3 $SKILL_DIR/scripts/generate_with_preset.py \
+  --preset mockup \
+  --svg-palette damemano \
+  --remove-bg \
+  --output-svg \
+  "clean app logo" \
+  ./logo.svg
 ```
 
 ## Tips for Better Results

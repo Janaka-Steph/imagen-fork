@@ -59,6 +59,7 @@ python3 $SKILL_DIR/scripts/generate_with_preset.py \
 | `--remove-bg, -r` | Remove background (requires: `pip install rembg`) |
 | `--output-svg, -s` | Convert to SVG (requires: `pip install vtracer`) |
 | `--svg-mode` | SVG color mode: `color` (default) or `binary` for B/W |
+| `--svg-palette` | SVG color palette for quantization (auto-detected from `--preset`) |
 | `--list, -l` | List available presets |
 | `--show-prompt` | Show full prompt without generating |
 
@@ -133,11 +134,15 @@ python3 $SKILL_DIR/scripts/generate_with_preset.py \
 ### Generate SVG logo/icon
 
 ```bash
-# Color SVG (full color vectorization)
+# Color SVG with project palette (recommended for clean output)
 python3 $SKILL_DIR/scripts/generate_with_preset.py \
-  --output-svg \
+  --preset damemano \
+  --remove-bg --output-svg \
   "minimalist app logo" \
   logo.svg
+
+# The --preset automatically sets --svg-palette for color quantization
+# This produces much smaller, cleaner SVGs (~25KB vs ~400KB)
 
 # Binary SVG for line art (faster, cleaner)
 python3 $SKILL_DIR/scripts/generate_with_preset.py \
@@ -145,8 +150,10 @@ python3 $SKILL_DIR/scripts/generate_with_preset.py \
   "simple line icon" \
   icon.svg
 
-# Combine with background removal for best results
+# Explicit palette override (if different from --preset)
 python3 $SKILL_DIR/scripts/generate_with_preset.py \
+  --preset mockup \
+  --svg-palette damemano \
   --remove-bg --output-svg \
   "logo on transparent background" \
   logo.svg
@@ -158,16 +165,24 @@ python3 $SKILL_DIR/scripts/generate_with_preset.py \
 python3 $SKILL_DIR/scripts/convert_to_svg.py input.png output.svg
 
 # Binary mode for line art
-python3 $SKILL_DIR/scripts/convert_to_svg.py --mode binary icon.png icon.svg
+python3 $SKILL_DIR/scripts/convert_to_svg.py --svg-mode binary icon.png icon.svg
 
 # Logo preset (quantizes colors for cleaner output)
-python3 $SKILL_DIR/scripts/convert_to_svg.py --preset logo input.png output.svg
+python3 $SKILL_DIR/scripts/convert_to_svg.py --svg-preset logo input.png output.svg
 
 # Project-specific palette for best results
-python3 $SKILL_DIR/scripts/convert_to_svg.py --palette damemano logo.png logo.svg
+python3 $SKILL_DIR/scripts/convert_to_svg.py --svg-palette damemano logo.png logo.svg
 ```
 
-**Tip:** For logos with gradients or anti-aliasing, use `--preset logo` or `--palette` to quantize colors first. This produces much cleaner SVGs.
+**Tip:** For logos with gradients or anti-aliasing, use `--svg-preset logo` or `--svg-palette` to quantize colors first. This produces much cleaner SVGs (typically 25KB vs 400KB+).
+
+## SVG Optimization
+
+When using `--output-svg`, the tool automatically:
+1. Applies the `logo` preset for color quantization
+2. Uses the project palette from `--preset` (if not a built-in like `creative` or `mockup`)
+
+This ensures clean, optimized SVGs on the first generation. Override with `--svg-palette` if needed.
 
 ## Parallel Generation
 

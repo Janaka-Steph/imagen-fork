@@ -66,6 +66,7 @@ python3 $SKILL_DIR/scripts/generate_with_preset.py [options] <prompt> [output_pa
 | `--remove-bg` | No | - | Remove background (requires rembg) |
 | `--output-svg, -s` | No | - | Convert output to SVG (requires vtracer) |
 | `--svg-mode` | No | `color` | SVG color mode: `color` or `binary` |
+| `--svg-palette` | No | auto | SVG color palette for quantization (auto-detected from `--preset`) |
 
 ### SVG Conversion Script
 
@@ -77,11 +78,20 @@ python3 $SKILL_DIR/scripts/convert_to_svg.py [options] <input> <output>
 |-----------|----------|---------|-------------|
 | `input` | Yes | - | Input image file (PNG, JPG, etc.) |
 | `output` | Yes | - | Output SVG file path |
-| `--mode, -m` | No | `color` | Color mode: `color` or `binary` for B/W |
-| `--preset` | No | - | Preset: `logo` (quantizes colors for cleaner output) |
-| `--palette` | No | - | Color palette for quantization (e.g., `damemano`) |
+| `--svg-mode, -m` | No | `color` | Color mode: `color` or `binary` for B/W |
+| `--svg-preset` | No | - | SVG preset: `logo` (quantizes colors for cleaner output) |
+| `--svg-palette` | No | - | Color palette for quantization (e.g., `damemano`) |
 | `--filter-speckle` | No | `4` | Speckle filter size (higher = cleaner) |
 | `--color-precision` | No | `6` | Color precision 1-8 (lower = fewer colors) |
+
+### SVG Auto-Optimization
+
+When using `--output-svg` in `generate_with_preset.py`, the tool automatically:
+- Applies the `logo` preset to quantize colors
+- Detects the project palette from `--preset` (ignores built-ins like `creative`, `mockup`)
+- Produces clean, optimized SVGs (~25KB instead of ~400KB)
+
+Override with explicit `--svg-palette` if needed.
 
 ### Environment Variables
 
