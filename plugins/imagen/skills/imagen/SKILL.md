@@ -212,16 +212,51 @@ python3 $SKILL_DIR/scripts/generate_with_preset.py \
   original-screen-fixed.jpg
 ```
 
-## Parallel Generation
+## Batch Generation (Parallel)
 
-When generating multiple images, run commands in parallel for efficiency:
+**IMPORTANT:** When generating more than 1 image, ALWAYS use `generate_batch.py`. It runs requests in parallel and is 3-5x faster than sequential calls.
 
 ```bash
-# Run these in parallel (multiple Bash calls in same response)
-python3 $SKILL_DIR/scripts/generate_with_preset.py --preset mobile-ui "home screen" home.jpg
-python3 $SKILL_DIR/scripts/generate_with_preset.py --preset mobile-ui "profile screen" profile.jpg
-python3 $SKILL_DIR/scripts/generate_with_preset.py --preset mobile-ui "settings screen" settings.jpg
+# From command line (prompt/output pairs)
+python3 $SKILL_DIR/scripts/generate_batch.py \
+  --preset mobile-ui,damemano \
+  "home screen" home.jpg \
+  "profile screen" profile.jpg \
+  "settings screen" settings.jpg
+
+# From JSON file (better for many images)
+python3 $SKILL_DIR/scripts/generate_batch.py jobs.json
+
+# Control parallelism (default: 4 workers)
+python3 $SKILL_DIR/scripts/generate_batch.py --workers 8 jobs.json
 ```
+
+### JSON Batch Format
+
+```json
+{
+  "preset": "mobile-ui,damemano",
+  "jobs": [
+    {"prompt": "home screen with search bar", "output": "home.jpg"},
+    {"prompt": "user profile page", "output": "profile.jpg"},
+    {"prompt": "settings menu", "output": "settings.jpg", "input": "reference.jpg"}
+  ]
+}
+```
+
+### Batch Options
+
+| Option | Description |
+|--------|-------------|
+| `--preset, -p` | Preset name(s), overrides JSON preset |
+| `--workers, -w` | Max parallel workers (default: 4) |
+| `--size` | Image size: `512`, `1K` (default), `2K` |
+
+### When to Use Batch
+
+- **2+ images**: Always use batch (mandatory for multiple images)
+- **Same preset**: All images share the preset (set once)
+- **Progress tracking**: Shows real-time progress with success/failure status
 
 ## Environment
 
