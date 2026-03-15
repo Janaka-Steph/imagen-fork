@@ -27,7 +27,7 @@ from pathlib import Path
 
 
 # Configuration
-DEFAULT_MODEL_ID = "gemini-3-pro-image-preview"
+DEFAULT_MODEL_ID = "gemini-3.1-pro-preview"
 API_BASE_URL = "https://generativelanguage.googleapis.com/v1beta/models"
 DEFAULT_IMAGE_SIZE = "1K"
 VALID_SIZES = {"512", "1K", "2K"}
